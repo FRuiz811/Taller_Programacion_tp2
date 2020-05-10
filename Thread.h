@@ -17,8 +17,8 @@ class Thread {
     Thread(Thread &&other);
     Thread& operator=(Thread&& other);
 
-    Thread(const Thread &) = delete;
-    Thread &operator=(const Thread &) = delete;
+    Thread(const Thread&) = delete;
+    Thread &operator=(const Thread&) = delete;
 
 };
 

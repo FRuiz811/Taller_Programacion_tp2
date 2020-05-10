@@ -1,10 +1,10 @@
 #include "Town.h"
 #include <iostream>
 #include <map>
-#include "Farmer.h"
+#include "Collector.h"
 
-Town::Town(std::string nameWorkers, std::string nameMap) :food_warehouse(),
-  wood_warehouse(),carbon_and_iron_warehouse() {
+Town::Town(const std::string& nameWorkers, const std::string& nameMap) 
+: food_warehouse(),   wood_warehouse(),carbon_and_iron_warehouse() {
 	this->fileWorkers.open(nameWorkers, std::ifstream::in);
   if (!this->fileWorkers.is_open())
     throw std::exception();
@@ -13,25 +13,35 @@ Town::Town(std::string nameWorkers, std::string nameMap) :food_warehouse(),
     throw std::exception();
 }
 
+void Town::close_queues() {
+    food_warehouse.close();
+    wood_warehouse.close();
+    carbon_and_iron_warehouse.close();
+}
+
 void Town::run() {
   int j = 0;
+  std::string type;
 	for (auto it = data.begin(); it != data.end(); ++it) {
 		if (it->first == "Agricultores") {
+      type = "Farmer";
     	for (int i = 0; i<it->second; i++) {
-        //this->workers[j] = new Farmer();
+        this->workers[j] = new Collector(food_warehouse, i, type);
         j++;
       }
-    }/* else if (it->first == "Leniadores") {
+    } else if (it->first == "Leniadores") {
+      type = "WoodCutterr";
     	for (int i = 0; i<it->second; i++) {
-   		 this->workers[j] = WoodCutterr();
+   		 this->workers[j] = new Collector(wood_warehouse, i, type);
    		 j++;
       }
     } else if (it->first == "Mineros") {
+      type = "Miner";
     	for (int i = 0; i<it->second; i++) {
-   		  this->workers[j] = Miner();
+   		  this->workers[j] = new Collector(carbon_and_iron_warehouse, i, type);
         j++;
       }
-    } else if (it->first == "Cocineros") {
+    }/* else if (it->first == "Cocineros") {
     	for (int i = 0; i<it->second; i++) {
    		  this->workers[j] = Cook();
         j++;  		
@@ -51,9 +61,9 @@ void Town::run() {
   	}*/
   }
   size_t total_workers = this->workers.size();
-  for (size_t i = 0; i < total_workers; ++i)
-    std::cout << "Acá sale un Thread\n";
-    //this->workers[i]->start();
+  for (size_t i = 0; i < total_workers; i++){
+    this->workers[i]->start();
+  }
   return;
 }
 
@@ -73,8 +83,8 @@ void Town::generate_workers() {
 		data.insert(std::pair<std::string,int>(worker_type,quantity));
     total_workers +=quantity;
 	}
-  std::vector<Thread*> vector(total_workers);
-  workers = vector;
+  std::vector<Worker*> vector(total_workers);
+  workers = std::move(vector);
 	run();
 
 	return;
@@ -84,8 +94,8 @@ void Town::process_resources() {
   char resource = ' ';
   std::string line;
   int i = 0;
-  getline(this->fileMap,line);
-  while (!this->fileMap.eof()) {
+  while (!this->fileMap.eof()) { 
+    getline(this->fileMap,line);
     while (line[i] != '\0') {
       resource = line[i];
       switch(resource) {
@@ -105,8 +115,8 @@ void Town::process_resources() {
       i++;
     }
     i = 0;
-    getline(this->fileMap,line);
   }
+  close_queues();
 }
 
 void Town::bell() {

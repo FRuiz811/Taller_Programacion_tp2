@@ -16,6 +16,14 @@ public:
 	char pop();
 	void push(char value);
 	void close();
+	bool isOpen() const;
+	bool empty() const;
+
+	BlockingQueue(BlockingQueue &&other);
+    BlockingQueue& operator=(BlockingQueue&& other);
+
+	BlockingQueue(const BlockingQueue&) = delete;
+    BlockingQueue &operator=(const BlockingQueue&) = delete;
 };
 
 #endif
