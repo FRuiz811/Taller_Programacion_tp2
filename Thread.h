@@ -5,22 +5,21 @@
 
 class Thread {
 
-    private:
-        std::thread thread;
+  private:
+    std::thread thread;
         
-    public:
-        Thread();
-        virtual ~Thread();
-        void start();
-        void join();
-        virtual void run() = 0;
-        Thread(Thread &&other);
-        Thread& operator=(Thread&& other);
+  public:
+    Thread();  
+    virtual ~Thread();
+    void start();
+    void join();
+    virtual void run() = 0;
+    Thread(Thread &&other);
+    Thread& operator=(Thread&& other);
 
-        Thread(const Thread &) = delete;
-        Thread &operator=(const Thread &) = delete;
+    Thread(const Thread &) = delete;
+    Thread &operator=(const Thread &) = delete;
 
 };
 
-#endif // THREAD_H
-
+#endif 

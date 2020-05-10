@@ -1,72 +1,126 @@
 #include "Town.h"
 #include <iostream>
 #include <map>
+#include "Farmer.h"
 
-
-Town::Town() {}
-
-Town::Town(std::string nameFile) {
-	this->name = nameFile;
-	this->file.open(this->name, std::ifstream::in);
-  if (!file.is_open())
+Town::Town(std::string nameWorkers, std::string nameMap) :food_warehouse(),
+  wood_warehouse(),carbon_and_iron_warehouse() {
+	this->fileWorkers.open(nameWorkers, std::ifstream::in);
+  if (!this->fileWorkers.is_open())
+    throw std::exception();
+  this->fileMap.open(nameMap, std::ifstream::in);
+  if (!this->fileMap.is_open())
     throw std::exception();
 }
 
 void Town::run() {
-	for (auto it = workers.begin(); it != workers.end(); ++it) {
-				if (it->first == "Agricultores") {
-    	for (int i = 0; i<it->second; i++)
-    		//Farmer();
-    		std::cout << it->first << "\n";
-    } else if (it->first == "Leniadores") {
-    	for (int i = 0; i<it->second; i++)
-   		//WoodCutterr();
-   		std::cout << it->first << "\n";
+  int j = 0;
+	for (auto it = data.begin(); it != data.end(); ++it) {
+		if (it->first == "Agricultores") {
+    	for (int i = 0; i<it->second; i++) {
+        //this->workers[j] = new Farmer();
+        j++;
+      }
+    }/* else if (it->first == "Leniadores") {
+    	for (int i = 0; i<it->second; i++) {
+   		 this->workers[j] = WoodCutterr();
+   		 j++;
+      }
     } else if (it->first == "Mineros") {
-    	for (int i = 0; i<it->second; i++)
-   		//Miner();
-   		std::cout << it->first << "\n";
+    	for (int i = 0; i<it->second; i++) {
+   		  this->workers[j] = Miner();
+        j++;
+      }
     } else if (it->first == "Cocineros") {
-    	for (int i = 0; i<it->second; i++)
-   		//Cook();
-   		std::cout << it->first << "\n";
+    	for (int i = 0; i<it->second; i++) {
+   		  this->workers[j] = Cook();
+        j++;  		
+      }
     } else if (it->first == "Carpinteros") {
-    	for (int i = 0; i<it->second; i++)
-   		//Carpenter();
-   		std::cout << it->first << "\n";
+    	for (int i = 0; i<it->second; i++) {
+   		  this->workers[j] = Carpenter();
+        j++;
+      }
     } else if (it->first == "Armeros") {
-    	for (int i = 0; i<it->second; i++)
-   			//Armorer();
-   			std::cout << it->first << "\n";
+    	for (int i = 0; i<it->second; i++) {
+   			this->workers[j] = Armorer();
+        j++;
+      }
     } else {
     	throw std::exception();
-  	}
-    //Agregar el hilo en un array de hilos para despues poder hacer el join de cada uno.
+  	}*/
   }
+  size_t total_workers = this->workers.size();
+  for (size_t i = 0; i < total_workers; ++i)
+    std::cout << "Acá sale un Thread\n";
+    //this->workers[i]->start();
   return;
 }
 
-void Town::generate_workers(){
+void Town::generate_workers() {
 	std::string line;
 	int quantity = 0;
 	std::size_t equal;
+  int total_workers = 0;
 
-	while (!file.eof()) {
-		getline(file,line);
+	while (fileWorkers.good()) {
+		getline(fileWorkers,line);
 		equal = line.find('=');
 		if (equal == std::string::npos)
 			break;
 		quantity = stoi(line.substr(equal+1, line.size()));
 		std::string worker_type = line.substr(0, equal);
-		workers.insert(std::pair<std::string,int>(worker_type,quantity));
+		data.insert(std::pair<std::string,int>(worker_type,quantity));
+    total_workers +=quantity;
 	}
+  std::vector<Thread*> vector(total_workers);
+  workers = vector;
 	run();
 
 	return;
 }
 
+void Town::process_resources() {
+  char resource = ' ';
+  std::string line;
+  int i = 0;
+  getline(this->fileMap,line);
+  while (!this->fileMap.eof()) {
+    while (line[i] != '\0') {
+      resource = line[i];
+      switch(resource) {
+        case 'T':
+          food_warehouse.push(resource);
+          break;
+        case 'M':
+          wood_warehouse.push(resource);
+          break;
+        case 'C':
+          carbon_and_iron_warehouse.push(resource);
+          break;
+        case 'H':
+          carbon_and_iron_warehouse.push(resource);
+          break;
+      }
+      i++;
+    }
+    i = 0;
+    getline(this->fileMap,line);
+  }
+}
+
+void Town::bell() {
+  for (size_t i = 0; i < workers.size(); i++) {
+    workers[i]->join();
+    delete workers[i];
+  }
+}
+
 Town::~Town() {
-	if (this->file.is_open()) {
-		this->file.close();
+	if (this->fileWorkers.is_open()) {
+		this->fileWorkers.close();
 	}
+  if (this->fileMap.is_open()) {
+    this->fileMap.close();
+  }
 }

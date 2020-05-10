@@ -1,5 +1,7 @@
 #include "Town.h"
-#include "MapResources.h"
+#include "ResourceMap.h"
+#include <iostream>
+
 
 int main(int argc, char *argv[]) {
     if (argc != 3) 
@@ -7,15 +9,13 @@ int main(int argc, char *argv[]) {
     
     std::string workers_cfg = argv[1];
     std::string map = argv[2];
-    //Falta crear el CounterPoints (Ver si va dentro de Town o directamente acá)
 
     //Se lee el archivo de trabajadores y se llaman a las "factory" 
     //de estos asi se crean los hilos.
-    Town town(workers_cfg);
+    Town town(workers_cfg,map);
     town.generate_workers();
-    MapResources map(map);
-
-
+    town.process_resources();
+    // town.bell();
 
     return 0;
 }

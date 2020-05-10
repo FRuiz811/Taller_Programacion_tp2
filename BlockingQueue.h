@@ -1,0 +1,21 @@
+#ifndef BLOCKING_QUEUE_H
+#define BLOCKING_QUEUE_H
+#include <mutex>
+#include <condition_variable>
+#include <queue>
+
+class BlockingQueue {
+private:
+	std::queue<char> blocking_queue;
+    std::mutex m;
+    std::condition_variable cv;
+    bool isClosed = false;
+public:
+	BlockingQueue();
+	~BlockingQueue();
+	char pop();
+	void push(char value);
+	void close();
+};
+
+#endif
