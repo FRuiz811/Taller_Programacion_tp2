@@ -5,7 +5,7 @@
 
 Town::Town(const std::string& nameWorkers, const std::string& nameMap) 
 : food_warehouse(),   wood_warehouse(),carbon_and_iron_warehouse(),
-  inventory() {
+  inventory(), points() {
 	this->fileWorkers.open(nameWorkers, std::ifstream::in);
   if (!this->fileWorkers.is_open())
     throw std::exception();
@@ -127,7 +127,7 @@ void Town::bell() {
     delete workers[i];
   }
   inventory.print_resources();
-  std::cout << "Puntos de Beneficio acumulados: 0\n";
+  points.print_counter();
 }
 
 Town::~Town() {

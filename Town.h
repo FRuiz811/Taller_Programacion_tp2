@@ -7,7 +7,7 @@
 #include "Inventory.h"
 #include "Worker.h"
 #include "BlockingQueue.h"
-
+#include "ProfitPointsCounter.h"
 class Town {
 
 private:
@@ -18,6 +18,7 @@ private:
 	BlockingQueue wood_warehouse;
 	BlockingQueue carbon_and_iron_warehouse;
 	Inventory inventory;
+	ProfitPointsCounter points;
 
 	void run(const std::map<std::string, int>& data);
 	void close_queues();

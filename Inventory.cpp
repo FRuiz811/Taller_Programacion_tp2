@@ -35,6 +35,7 @@ void Inventory::print_resources() {
 	search_resource = resources.find('H');
 	std::cout << "  - Hierro: " << search_resource->second << "\n";
 	std::cout << "\n";
+	return;
 }
 
 void Inventory::remove_resource(char resource, int lot) {
