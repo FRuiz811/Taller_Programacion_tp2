@@ -9,7 +9,8 @@ private:
 	BlockingQueue& queue;
 
 public:
-	Collector(BlockingQueue& queue,const int id,std::string& type);
+	Collector(BlockingQueue& queue,
+		const int id,std::string& type, Inventory& inv);
 	void run();
 	~Collector();
 };

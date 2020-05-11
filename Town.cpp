@@ -4,7 +4,8 @@
 #include "Collector.h"
 
 Town::Town(const std::string& nameWorkers, const std::string& nameMap) 
-: food_warehouse(),   wood_warehouse(),carbon_and_iron_warehouse() {
+: food_warehouse(),   wood_warehouse(),carbon_and_iron_warehouse(),
+  inventory() {
 	this->fileWorkers.open(nameWorkers, std::ifstream::in);
   if (!this->fileWorkers.is_open())
     throw std::exception();
@@ -19,26 +20,26 @@ void Town::close_queues() {
     carbon_and_iron_warehouse.close();
 }
 
-void Town::run() {
+void Town::run(const std::map<std::string, int>& data) {
   int j = 0;
   std::string type;
 	for (auto it = data.begin(); it != data.end(); ++it) {
 		if (it->first == "Agricultores") {
       type = "Farmer";
     	for (int i = 0; i<it->second; i++) {
-        this->workers[j] = new Collector(food_warehouse, i, type);
+        this->workers[j] = new Collector(food_warehouse, i, type, inventory);
         j++;
       }
     } else if (it->first == "Leniadores") {
       type = "WoodCutterr";
     	for (int i = 0; i<it->second; i++) {
-   		 this->workers[j] = new Collector(wood_warehouse, i, type);
+   		 this->workers[j] = new Collector(wood_warehouse, i, type, inventory);
    		 j++;
       }
     } else if (it->first == "Mineros") {
       type = "Miner";
     	for (int i = 0; i<it->second; i++) {
-   		  this->workers[j] = new Collector(carbon_and_iron_warehouse, i, type);
+   		  this->workers[j] = new Collector(carbon_and_iron_warehouse, i, type, inventory);
         j++;
       }
     }/* else if (it->first == "Cocineros") {
@@ -68,13 +69,14 @@ void Town::run() {
 }
 
 void Town::generate_workers() {
+  std::map<std::string, int> data;
 	std::string line;
 	int quantity = 0;
 	std::size_t equal;
   int total_workers = 0;
 
-	while (fileWorkers.good()) {
-		getline(fileWorkers,line);
+	while (this->fileWorkers.good()) {
+		getline(this->fileWorkers,line);
 		equal = line.find('=');
 		if (equal == std::string::npos)
 			break;
@@ -84,8 +86,8 @@ void Town::generate_workers() {
     total_workers +=quantity;
 	}
   std::vector<Worker*> vector(total_workers);
-  workers = std::move(vector);
-	run();
+  this->workers = std::move(vector);
+	run(data);
 
 	return;
 }
@@ -124,6 +126,8 @@ void Town::bell() {
     workers[i]->join();
     delete workers[i];
   }
+  inventory.print_resources();
+  std::cout << "Puntos de Beneficio acumulados: 0\n";
 }
 
 Town::~Town() {

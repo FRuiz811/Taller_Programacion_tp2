@@ -2,15 +2,17 @@
 #define WORKER_H
 #include "Thread.h"
 #include <string>
+#include "Inventory.h"
 
 class Worker : public Thread {
 protected:
-	//Refencia a INN
 	const int work_time;
 	const int id;
 	const std::string worker_type;
+	Inventory& inventory;
+	
 public:
-	Worker(int work_time, int id, std::string& worker_type);
+	Worker(int work_time, int id, std::string& worker_type, Inventory& inv);
 	virtual ~Worker();
 	Worker(Worker &&other) = delete;
     Worker& operator=(Worker&& other) = delete;

@@ -2,8 +2,9 @@
 #define TOWN_H
 #include <string>
 #include <fstream>
-#include <map>
 #include <vector>
+#include <map>
+#include "Inventory.h"
 #include "Worker.h"
 #include "BlockingQueue.h"
 
@@ -12,12 +13,13 @@ class Town {
 private:
 	std::ifstream fileWorkers;
 	std::ifstream fileMap;
-	std::map<std::string, int> data;
 	std::vector<Worker*> workers;
 	BlockingQueue food_warehouse;
 	BlockingQueue wood_warehouse;
 	BlockingQueue carbon_and_iron_warehouse;
-	void run();
+	Inventory inventory;
+
+	void run(const std::map<std::string, int>& data);
 	void close_queues();
 
 public:
