@@ -1,5 +1,6 @@
 #include "Inventory.h"
 #include <iostream>
+#include <utility>
 
 Inventory::Inventory(){
 	std::unique_lock<std::mutex> lock(m);
@@ -24,7 +25,7 @@ void Inventory::add_resource(char resource) {
 	return;
 }
 
-void Inventory::print_resources() {
+void Inventory::print_resources() const {
 	std::cout << "Recursos Restantes:\n";
 	auto search_resource = resources.find('T');
 	std::cout << "  - Trigo: " << search_resource->second << "\n";

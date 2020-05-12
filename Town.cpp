@@ -1,7 +1,12 @@
 #include "Town.h"
 #include <iostream>
 #include <map>
-#include "Collector.h"
+#include <utility>
+#include <vector>
+#include <string> 
+#include "Farmer.h"
+#include "WoodCutter.h"
+#include "Miner.h"
 
 Town::Town(const std::string& nameWorkers, const std::string& nameMap) 
 : food_warehouse(),   wood_warehouse(),carbon_and_iron_warehouse(),
@@ -25,21 +30,19 @@ void Town::run(const std::map<std::string, int>& data) {
   std::string type;
 	for (auto it = data.begin(); it != data.end(); ++it) {
 		if (it->first == "Agricultores") {
-      type = "Farmer";
     	for (int i = 0; i<it->second; i++) {
-        this->workers[j] = new Collector(food_warehouse, i, type, inventory);
+        this->workers[j] = new Farmer(food_warehouse, j, inventory);
         j++;
       }
     } else if (it->first == "Leniadores") {
-      type = "WoodCutterr";
     	for (int i = 0; i<it->second; i++) {
-   		 this->workers[j] = new Collector(wood_warehouse, i, type, inventory);
+   		 this->workers[j] = new WoodCutter(wood_warehouse, j, inventory);
    		 j++;
       }
     } else if (it->first == "Mineros") {
-      type = "Miner";
     	for (int i = 0; i<it->second; i++) {
-   		  this->workers[j] = new Collector(carbon_and_iron_warehouse, i, type, inventory);
+   		  this->workers[j] = new Miner(carbon_and_iron_warehouse, j,
+                                         inventory);
         j++;
       }
     }/* else if (it->first == "Cocineros") {
@@ -100,7 +103,7 @@ void Town::process_resources() {
     getline(this->fileMap,line);
     while (line[i] != '\0') {
       resource = line[i];
-      switch(resource) {
+      switch (resource) {
         case 'T':
           food_warehouse.push(resource);
           break;
@@ -126,6 +129,9 @@ void Town::bell() {
     workers[i]->join();
     delete workers[i];
   }
+}
+
+void Town::show_results() const{
   inventory.print_resources();
   points.print_counter();
 }

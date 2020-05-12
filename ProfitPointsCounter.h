@@ -9,15 +9,16 @@ private:
 
 public:
 	ProfitPointsCounter();
-	~ProfitPointsCounter();
-	void print_counter();
-	void add_points(int points);
 	ProfitPointsCounter(ProfitPointsCounter &&other);
   ProfitPointsCounter& operator=(ProfitPointsCounter&& other);
 
+	void print_counter() const;
+	void add_points(int points);
+
+  ~ProfitPointsCounter();
+
 	ProfitPointsCounter(const ProfitPointsCounter&) = delete;
   ProfitPointsCounter &operator=(const ProfitPointsCounter&) = delete;
-
 };
 
 #endif

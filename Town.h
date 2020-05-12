@@ -8,8 +8,8 @@
 #include "Worker.h"
 #include "BlockingQueue.h"
 #include "ProfitPointsCounter.h"
-class Town {
 
+class Town {
 private:
 	std::ifstream fileWorkers;
 	std::ifstream fileMap;
@@ -24,16 +24,17 @@ private:
 	void close_queues();
 
 public:
-
 	explicit Town(const std::string& nameWorkers, const std::string& nameMap); 
 
-	Town(const Town& other) = delete;
-
+	void show_results() const;
  	void generate_workers();
  	void process_resources();
  	void bell();
 
 	~Town();
+
+	Town(const Town& other) = delete;
+	Town &operator=(const Town&) = delete;
 };
 
 #endif

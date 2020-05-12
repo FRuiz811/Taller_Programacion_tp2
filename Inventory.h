@@ -12,12 +12,14 @@ private:
 
 public:
 	Inventory();
-	~Inventory();
-	void add_resource(char resource);
-	void remove_resource(char resource, int lot);
-	void print_resources();
 	Inventory(Inventory &&other);
     Inventory& operator=(Inventory&& other);
+
+	void add_resource(char resource);
+	void remove_resource(char resource, int lot);
+	void print_resources() const;
+
+    ~Inventory();
 
 	Inventory(const Inventory&) = delete;
     Inventory &operator=(const Inventory&) = delete;

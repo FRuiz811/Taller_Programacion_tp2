@@ -1,6 +1,6 @@
 #include "Town.h"
 #include <iostream>
-
+#include <string>
 
 int main(int argc, char *argv[]) {
     if (argc != 3) 
@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
     town.generate_workers();
     town.process_resources();
     town.bell();
+    town.show_results();
 
     return 0;
 }

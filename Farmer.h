@@ -1,14 +1,11 @@
 #ifndef FARMER_H
 #define FARMER_H
-#include "Thread.h"
+#include "Collector.h"
 
-class Farmer : public Thread {
-private:
-	int work_time = 50;
-	
+class Farmer : public Collector {
 public:
-	Farmer();
-	void run();
+	Farmer(BlockingQueue& queue, const int id, Inventory& inv);
+	virtual void run();
 	~Farmer();
 };
 
