@@ -2,19 +2,20 @@
 #include <unistd.h>
 #include <iostream>
 
+#define COLLECTOR_WORK_TIME 50
+
 Collector::Collector(BlockingQueue& queue,const int id, Inventory& inv) :
- Worker(50, id, inv),queue(queue) {}
+ Worker(COLLECTOR_WORK_TIME, id, inv),queue(queue) {}
 
 void Collector::run() {
 	while(this->queue.isOpen() || !this->queue.empty()){
-		try{
 			char resource = this->queue.pop();
+			if (resource == '\0') 
+				return;
 			usleep(this->work_time);
 			this->inventory.add_resource(resource);
-		} catch (const std::exception&) {
-			break;
-		}
 	}
+	return;
 }
 
 Collector::~Collector() {}

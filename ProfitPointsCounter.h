@@ -13,7 +13,7 @@ public:
   ProfitPointsCounter& operator=(ProfitPointsCounter&& other);
 
 	void print_counter() const;
-	void add_points(int points);
+	void add_points(const int points);
 
   ~ProfitPointsCounter();
 

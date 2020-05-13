@@ -9,7 +9,9 @@ private:
 
 public:
 	Collector(BlockingQueue& queue, const int id, Inventory& inv);
+
 	virtual void run();
+
 	~Collector();
 };
 

@@ -5,9 +5,9 @@ ProfitPointsCounter::ProfitPointsCounter(){
 	this->counter = 0;
 }
 
-void ProfitPointsCounter::add_points(int points) {
+void ProfitPointsCounter::add_points(const int points) {
 	std::unique_lock<std::mutex> lock(m);
-	this->counter+=points;
+	this->counter += points;
 	return;
 }
 

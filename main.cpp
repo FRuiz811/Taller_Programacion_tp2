@@ -9,11 +9,11 @@ int main(int argc, char *argv[]) {
     const std::string workers_cfg = argv[1];
     const std::string map = argv[2];
 
-    //Se lee el archivo de trabajadores y se llaman a las "factory" 
-    //de estos asi se crean los hilos.
     Town town(workers_cfg,map);
-    town.generate_workers();
-    town.process_resources();
+    if (town.generate_workers() == -1)
+        return 1;
+    if (town.process_resources() == -1) 
+        return 1;
     town.bell();
     town.show_results();
 

@@ -5,7 +5,9 @@
 class Farmer : public Collector {
 public:
 	Farmer(BlockingQueue& queue, const int id, Inventory& inv);
+
 	virtual void run();
+	
 	~Farmer();
 };
 

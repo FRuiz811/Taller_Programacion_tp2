@@ -9,7 +9,9 @@ private:
 
 public:
 	Producer(ProfitPointsCounter& counter, const int id, Inventory& inv);
-	virtual void run() = 0;
+
+	virtual void run(const int points, const std::unordered_map<char,int> request);
+
 	~Producer();
 };
 

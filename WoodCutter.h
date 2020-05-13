@@ -5,7 +5,9 @@
 class WoodCutter : public Collector {
 public:
 	WoodCutter(BlockingQueue& queue, const int id, Inventory& inv);
+
 	virtual void run();
+	
 	~WoodCutter();
 };
 

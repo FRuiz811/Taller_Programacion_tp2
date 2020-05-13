@@ -6,7 +6,7 @@ char BlockingQueue::pop() {
 	std::unique_lock<std::mutex> lock(m);
 	while(blocking_queue.empty()){
 		if(isClosed){
-			throw std::exception();
+			return '\0';
 		}
 		cv.wait(lock);
 	}

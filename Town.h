@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include "Inventory.h"
 #include "Worker.h"
 #include "BlockingQueue.h"
@@ -20,15 +20,16 @@ private:
 	Inventory inventory;
 	ProfitPointsCounter points;
 
-	void run(const std::map<std::string, int>& data);
+	int run(const std::unordered_map<std::string, int>& data);
+	int load_queue(char resource);
 	void close_queues();
 
 public:
 	explicit Town(const std::string& nameWorkers, const std::string& nameMap); 
 
 	void show_results() const;
- 	void generate_workers();
- 	void process_resources();
+ 	int generate_workers();
+ 	int process_resources();
  	void bell();
 
 	~Town();
