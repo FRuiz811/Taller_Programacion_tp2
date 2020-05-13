@@ -13,6 +13,11 @@ public:
 	virtual void run();
 
 	~Collector();
+
+	Collector(Collector &&other) = delete;
+    Collector& operator=(Collector&& other) = delete;
+    Collector(const Collector&) = delete;
+    Collector &operator=(const Collector&) = delete;
 };
 
 #endif

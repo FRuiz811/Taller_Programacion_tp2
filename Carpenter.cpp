@@ -6,8 +6,8 @@
 #define IRON 'H'
 #define IRON_REQUIRED 1
 
-Carpenter::Carpenter(ProfitPointsCounter& counter,const int id, Inventory& inv) :
- Producer(counter,id,inv) {
+Carpenter::Carpenter(ProfitPointsCounter& counter,const int id, 
+					 Inventory& inv) : Producer(counter,id,inv) {
  	this->points_producer = CARPENTER_PROFIT;
  	this->requirements[WOOD] = WOOD_REQUIRED;
  	this->requirements[IRON] = IRON_REQUIRED;

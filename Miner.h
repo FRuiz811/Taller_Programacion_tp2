@@ -9,6 +9,11 @@ public:
 	virtual void run();
 	
 	~Miner();
+
+	Miner(Miner &&other) = delete;
+    Miner& operator=(Miner&& other) = delete;
+    Miner(const Miner&) = delete;
+    Miner &operator=(const Miner&) = delete;
 };
 
 #endif

@@ -12,6 +12,11 @@ public:
 	Gunsmith(ProfitPointsCounter& counter, const int id, Inventory& inv);
 	virtual void run();
 	~Gunsmith();
+
+	Gunsmith(Gunsmith &&other) = delete;
+    Gunsmith& operator=(Gunsmith&& other) = delete;
+    Gunsmith(const Gunsmith&) = delete;
+    Gunsmith &operator=(const Gunsmith&) = delete;
 };
 
 #endif

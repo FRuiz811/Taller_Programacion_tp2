@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     if (town.process_resources() == -1) 
         return 1;
     town.bell();
-    town.show_results();
+    town.show_results(); 
 
     return 0;
 }

@@ -12,6 +12,11 @@ public:
 	Cook(ProfitPointsCounter& counter, const int id, Inventory& inv);
 	virtual void run();
 	~Cook();
+
+	Cook(Cook &&other) = delete;
+    Cook& operator=(Cook&& other) = delete;
+    Cook(const Cook&) = delete;
+    Cook &operator=(const Cook&) = delete;
 };
 
 #endif

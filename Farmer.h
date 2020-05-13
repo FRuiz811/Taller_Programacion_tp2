@@ -9,6 +9,11 @@ public:
 	virtual void run();
 	
 	~Farmer();
+
+	Farmer(Farmer &&other) = delete;
+    Farmer& operator=(Farmer&& other) = delete;
+    Farmer(const Farmer&) = delete;
+    Farmer &operator=(const Farmer&) = delete;
 };
 
 #endif
