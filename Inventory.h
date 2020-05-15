@@ -10,9 +10,10 @@ private:
 	std::mutex m;
     std::condition_variable cv;
     bool notified = false;
-    bool farmers_finish = false;
-    bool woodcutter_finish = false;
-    bool miner_finish = false;
+    bool not_initialize = true;
+    bool farmers_finish = true;
+    bool woodcutter_finish = true;
+    bool miner_finish = true;
 
 public:
 	Inventory();
@@ -22,8 +23,12 @@ public:
 	int add_resource(const char resource);
 	int remove_resource(const std::unordered_map<char,int>& request);
 	void print_resources() const;
-	bool isOpen() const;
+	bool is_empty() const;
+	void initialize(const char resource);
+	bool is_initialize() const;
+	bool is_open() const;
 	void collector_finish(const char type);
+
     ~Inventory();
 
 	Inventory(const Inventory&) = delete;

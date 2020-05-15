@@ -9,12 +9,12 @@ Collector::Collector(BlockingQueue& queue,const int id, Inventory& inv) :
 
 void Collector::run() {
 	char resource = '\0';
-	while(this->queue.isOpen() || !this->queue.empty()){
-			resource = this->queue.pop();
-			if (resource == '\0') 
-				return;
-			usleep(this->work_time);
-			this->inventory.add_resource(resource);
+	while (this->queue.is_open() || !this->queue.empty()) {
+		resource = this->queue.pop();
+		if (resource == '\0') 
+			break;
+		usleep(this->work_time);
+		this->inventory.add_resource(resource);
 	}
 	this->inventory.collector_finish(resource);
 	return;

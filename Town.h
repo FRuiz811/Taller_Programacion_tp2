@@ -21,7 +21,7 @@ private:
 	ProfitPointsCounter points;
 
 	int run(const std::unordered_map<std::string, int>& data);
-	int load_queue(char resource);
+	void load_queue(char resource);
 	void close_queues();
 
 public:

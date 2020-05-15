@@ -41,18 +41,21 @@ int Town::run(const std::unordered_map<std::string, int>& data) {
     	for (int i = 0; i<it->second; i++) {
         this->workers[j] = new Farmer(this->food_warehouse, j, 
                                       this->inventory);
+        this->inventory.initialize(WHEAT);
         j++;
       }
     } else if (it->first == "Leniadores") {
     	for (int i = 0; i<it->second; i++) {
    		 this->workers[j] = new WoodCutter(this->wood_warehouse, j, 
                                          this->inventory);
-   		 j++;
+       this->inventory.initialize(WOOD);
+       j++;
       }
     } else if (it->first == "Mineros") {
     	for (int i = 0; i<it->second; i++) {
    		  this->workers[j] = new Miner(this->carbon_and_iron_warehouse, j,
                                      this->inventory);
+        this->inventory.initialize(IRON);
         j++;
       }
     } else if (it->first == "Cocineros") {
@@ -104,7 +107,7 @@ int Town::generate_workers() {
 	return run(data);
 }
 
-int Town::load_queue(char resource) {
+void Town::load_queue(char resource) {
   switch (resource) {
     case WHEAT:
       food_warehouse.push(resource);
@@ -118,30 +121,26 @@ int Town::load_queue(char resource) {
     case IRON:
       carbon_and_iron_warehouse.push(resource);
       break;
-    default:
-      return -1;
   }
-  return 0;
+  return;
 }
 
 
 int Town::process_resources() {
   char resource = ' ';
   std::string line;
-  int result, i = 0;
+  int i = 0;
   while (!this->fileMap.eof()) { 
     getline(this->fileMap,line);
     while (line[i] != '\0') {
       resource = line[i];
-      result = load_queue(resource);
-      if (result == -1)
-        break;
+      load_queue(resource);
       i++;
     }
     i = 0;
   }
   close_queues();
-  return result;
+  return 0;
 }
 
 void Town::bell() {

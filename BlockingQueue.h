@@ -19,7 +19,7 @@ public:
 	char pop();
 	void push(char value);
 	void close();
-	bool isOpen() const;
+	bool is_open() const;
 	bool empty() const;
 
 	~BlockingQueue();

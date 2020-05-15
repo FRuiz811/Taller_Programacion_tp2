@@ -27,7 +27,7 @@ void BlockingQueue::close() {
 	cv.notify_all();
 }
 
-bool BlockingQueue::isOpen() const {
+bool BlockingQueue::is_open() const {
 	return !this->isClosed;
 }
 

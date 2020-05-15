@@ -44,6 +44,10 @@ void Inventory::print_resources() const {
 int Inventory::remove_resource(const std::unordered_map<char,int>& request) {
 	std::unique_lock<std::mutex> lock(m);
 	while (!this->notified){
+		if (!is_initialize())
+			return 1;
+		if(is_empty())
+			return -1;
 		cv.wait(lock);
 	}
 	for (auto it = request.begin(); it != request.end(); ++it) {
@@ -57,7 +61,22 @@ int Inventory::remove_resource(const std::unordered_map<char,int>& request) {
 	return 0;
 }
 
-bool Inventory::isOpen() const {
+void Inventory::initialize(const char resource) {
+	this->not_initialize = false;
+	if (resource == WHEAT) {
+		this->farmers_finish = false;
+	} else if (resource == WOOD) {
+		this->woodcutter_finish = false;
+	} else if (resource == CARBONO || resource == IRON) {
+		this->miner_finish = false;
+	}
+}
+
+bool Inventory::is_initialize() const {
+	return !this->not_initialize;
+}
+
+bool Inventory::is_open() const {
 	return (!this->farmers_finish || !this->woodcutter_finish || 
 					!this->miner_finish);
 }
@@ -69,8 +88,17 @@ void Inventory::collector_finish(const char type) {
 		this->woodcutter_finish = true;
 	} else if (type == CARBONO || type == IRON) {
 		this->miner_finish = true;
+	} else if (type == '\0') {
+		this->not_initialize = true;
 	}
 	return;
+}
+
+bool Inventory::is_empty() const {
+	int total_resources = 0;
+	for (auto it = resources.begin(); it != resources.end(); ++it) 
+		total_resources += it->second;
+	return total_resources == 0;
 }
 
 
