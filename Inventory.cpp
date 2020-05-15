@@ -34,7 +34,7 @@ void Inventory::print_resources() const {
 	search_resource = resources.find(WOOD);
 	std::cout << "  - Madera: " << search_resource->second << "\n";
 	search_resource = resources.find(CARBONO);
-	std::cout << "  - Carbón: " << search_resource->second << "\n";
+	std::cout << "  - Carbon: " << search_resource->second << "\n";
 	search_resource = resources.find(IRON);
 	std::cout << "  - Hierro: " << search_resource->second << "\n";
 	std::cout << "\n";
