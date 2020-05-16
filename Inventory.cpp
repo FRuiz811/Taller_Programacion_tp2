@@ -28,7 +28,7 @@ int Inventory::add_resource(const char resource) {
 }
 
 void Inventory::print_resources() const {
-	std::cout << "Recursos Restantes:\n";
+	std::cout << "Recursos restantes:\n";
 	auto search_resource = resources.find(WHEAT);
 	std::cout << "  - Trigo: " << search_resource->second << "\n";
 	search_resource = resources.find(WOOD);
@@ -44,10 +44,8 @@ void Inventory::print_resources() const {
 int Inventory::remove_resource(const std::unordered_map<char,int>& request) {
 	std::unique_lock<std::mutex> lock(m);
 	while (!this->notified){
-		if (!is_initialize())
+		if (!is_initialize() || !is_open())
 			return 1;
-		if(is_empty())
-			return -1;
 		cv.wait(lock);
 	}
 	for (auto it = request.begin(); it != request.end(); ++it) {
@@ -88,9 +86,8 @@ void Inventory::collector_finish(const char type) {
 		this->woodcutter_finish = true;
 	} else if (type == CARBONO || type == IRON) {
 		this->miner_finish = true;
-	} else if (type == '\0') {
-		this->not_initialize = true;
 	}
+	cv.notify_all();
 	return;
 }
 

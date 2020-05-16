@@ -16,7 +16,6 @@ void Collector::run() {
 		usleep(this->work_time);
 		this->inventory.add_resource(resource);
 	}
-	this->inventory.collector_finish(resource);
 	return;
 }
 
