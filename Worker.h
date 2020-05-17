@@ -3,9 +3,9 @@
 #include "Thread.h"
 #include "Inventory.h"
 
-//Es una clase abstracta, representa un Worker de cualquier tipo, contiene un id y el tiempo que
-//tarda en realizar su trabajo. Además tiene una referencia al inventario
-//en el cual debe dejar o retirar los recursos que utiliza. 
+//Es una clase abstracta, representa un Worker de cualquier tipo, contiene un 
+//id y el tiempo que tarda en realizar su trabajo. Además tiene una referencia
+//al inventario en el cual debe dejar o retirar los recursos que utiliza. 
 class Worker : public Thread {
 protected:
 	const int work_time;
