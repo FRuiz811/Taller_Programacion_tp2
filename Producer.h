@@ -2,6 +2,7 @@
 #define PRODUCER_H
 #include "Worker.h"
 #include "ProfitPointsCounter.h"
+#include <unordered_map>
 
 //La clase Producer tiene asignado un contador de puntos de beneficios
 //en el cual va a ir sumando los puntos que genera luego de procesar los 

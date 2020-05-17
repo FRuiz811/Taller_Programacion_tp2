@@ -1,5 +1,6 @@
 #include "ProfitPointsCounter.h"
 #include <iostream>
+#include <utility>
 
 ProfitPointsCounter::ProfitPointsCounter(){
 	this->counter = 0;
