@@ -54,7 +54,7 @@ int Inventory::remove_resource(const std::unordered_map<char,int>& request) {
 			return -1;
 	}
 	for (auto it = request.begin(); it != request.end(); ++it) 
-			resources[it->first] -= it->second;
+		resources[it->first] -= it->second;
 	this->notified = false;
 	return 0;
 }
