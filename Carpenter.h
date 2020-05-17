@@ -10,7 +10,11 @@ private:
 	
 public:
 	Carpenter(ProfitPointsCounter& counter, const int id, Inventory& inv);
+	
+	//Invoca al método run de Producer, indicandole los puntos que genera
+	//y los recursos necesarios para poder hacer su trabajo.
 	virtual void run();
+	
 	~Carpenter();
 
 	Carpenter(Carpenter &&other) = delete;
