@@ -27,40 +27,40 @@ Town::Town(const std::string& nameWorkers, const std::string& nameMap) :
     throw std::exception();
 }
 
-int Town::create_workers(std::string tpye, int amount) {
+int Town::create_workers(std::string type, int amount) {
   static int j = 0;
-  if (tpye == "Agricultores") {
+  if (type == "Agricultores") {
       for (int i = 0; i < amount; i++) {
         this->workers[j] = new Farmer(this->food_warehouse, j, 
                                       this->inventory);
         this->inventory.initialize(WHEAT);
         j++;
       }
-    } else if (tpye == "Leniadores") {
+    } else if (type == "Leniadores") {
       for (int i = 0; i < amount; i++) {
        this->workers[j] = new WoodCutter(this->wood_warehouse, j, 
                                          this->inventory);
        this->inventory.initialize(WOOD);
        j++;
       }
-    } else if (tpye == "Mineros") {
+    } else if (type == "Mineros") {
       for (int i = 0; i < amount; i++) {
         this->workers[j] = new Miner(this->carbon_and_iron_warehouse, j,
                                      this->inventory);
         this->inventory.initialize(IRON);
         j++;
       }
-    } else if (tpye == "Cocineros") {
+    } else if (type == "Cocineros") {
       for (int i = 0; i < amount; i++) {
         this->workers[j] = new Cook(this->points, j, this->inventory);
         j++;      
       }
-    } else if (tpye == "Carpinteros") {
+    } else if (type == "Carpinteros") {
       for (int i = 0; i < amount; i++) {
         this->workers[j] = new Carpenter(this->points, j, this->inventory);
         j++;
       }
-    } else if (tpye == "Armeros") {
+    } else if (type == "Armeros") {
       for (int i = 0; i < amount; i++) {
         this->workers[j] = new Gunsmith(this->points, j, this->inventory);
         j++;

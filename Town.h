@@ -34,7 +34,7 @@ private:
 	
 	void close_queues();
 	
-	int create_workers(std::string tpye, int amount);
+	int create_workers(std::string type, int amount);
 
 public:
 	//Constructor de la clase, si o si requiere de los archivos de trabajadores
