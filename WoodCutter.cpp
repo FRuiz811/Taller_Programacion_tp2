@@ -3,10 +3,10 @@
 #define WOOD 'M'
 
 WoodCutter::WoodCutter(BlockingQueue& queue,const int id, Inventory& inv) :
- Collector(queue,id,inv) {}
+ Gatherer(queue,id,inv) {}
 
 void WoodCutter::run() {
-	Collector::run();
+	Gatherer::run();
 	this->inventory.collector_finish(WOOD);
 }
 

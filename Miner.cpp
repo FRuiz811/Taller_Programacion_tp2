@@ -1,13 +1,15 @@
 #include "Miner.h"
 
 #define IRON 'H'
+#define COAL 'C'
 
 Miner::Miner(BlockingQueue& queue,const int id, Inventory& inv) :
- Collector(queue,id,inv) {}
+ Gatherer(queue,id,inv) {}
 
 void Miner::run() {
-	Collector::run();
+	Gatherer::run();
 	this->inventory.collector_finish(IRON);
+	this->inventory.collector_finish(COAL);
 }
 
 Miner::~Miner() {}

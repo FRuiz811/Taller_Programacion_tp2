@@ -3,7 +3,7 @@
 #include <iostream>
 #include <unordered_map>
 
-#define PRODUCER_WORK_TIME 60
+#define PRODUCER_WORK_TIME 60000
 
 Producer::Producer(ProfitPointsCounter& counter,const int id, Inventory& inv) 
 : Worker(PRODUCER_WORK_TIME, id, inv), counter(counter) {}
@@ -18,8 +18,7 @@ void Producer::run(const int points,
 		} else if (result == 1) {
 			break;
 		}
-	} 
-	return;
+	}
 }
 
 Producer::~Producer() {}

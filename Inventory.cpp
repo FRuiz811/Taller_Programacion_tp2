@@ -5,14 +5,14 @@
 #define WHEAT 'T'
 #define WOOD 'M'
 #define IRON 'H'
-#define CARBONO 'C'
+#define COAL 'C'
 
 Inventory::Inventory(){
 	std::unique_lock<std::mutex> lock(m);
 	resources[WHEAT] = 0;
 	resources[WOOD] = 0;
 	resources[IRON] = 0;
-	resources[CARBONO] = 0;
+	resources[COAL] = 0;
 }
 
 Inventory::~Inventory(){}
@@ -34,12 +34,11 @@ void Inventory::print_resources() const {
 	std::cout << "  - Trigo: " << search_resource->second << "\n";
 	search_resource = resources.find(WOOD);
 	std::cout << "  - Madera: " << search_resource->second << "\n";
-	search_resource = resources.find(CARBONO);
+	search_resource = resources.find(COAL);
 	std::cout << "  - Carbon: " << search_resource->second << "\n";
 	search_resource = resources.find(IRON);
 	std::cout << "  - Hierro: " << search_resource->second << "\n";
 	std::cout << "\n";
-	return;
 }
 
 int Inventory::remove_resource(const std::unordered_map<char,int>& request) {
@@ -56,7 +55,6 @@ int Inventory::remove_resource(const std::unordered_map<char,int>& request) {
 	}
 	for (auto it = request.begin(); it != request.end(); ++it) 
 		resources[it->first] -= it->second;
-	this->notified = false;
 	return 0;
 }
 
@@ -66,7 +64,7 @@ void Inventory::initialize(const char resource) {
 		this->farmers_finish = false;
 	} else if (resource == WOOD) {
 		this->woodcutter_finish = false;
-	} else if (resource == CARBONO || resource == IRON) {
+	} else if (resource == COAL || resource == IRON) {
 		this->miner_finish = false;
 	}
 }
@@ -85,11 +83,10 @@ void Inventory::collector_finish(const char type) {
 		this->farmers_finish = true;
 	} else if (type == WOOD) {
 		this->woodcutter_finish = true;
-	} else if (type == CARBONO || type == IRON) {
+	} else if (type == COAL || type == IRON) {
 		this->miner_finish = true;
 	}
 	cv.notify_all();
-	return;
 }
 
 bool Inventory::is_empty() const {

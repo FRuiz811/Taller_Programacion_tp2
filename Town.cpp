@@ -14,10 +14,10 @@
 #define WHEAT 'T'
 #define WOOD 'M'
 #define IRON 'H'
-#define CARBONO 'C'
+#define COAL 'C'
 
 Town::Town(const std::string& nameWorkers, const std::string& nameMap) :
- food_warehouse(), wood_warehouse(),carbon_and_iron_warehouse(),
+ food_warehouse(), wood_warehouse(),coal_and_iron_warehouse(),
   inventory(), points() {
 	this->fileWorkers.open(nameWorkers, std::ifstream::in);
   if (!this->fileWorkers.is_open())
@@ -45,9 +45,10 @@ int Town::create_workers(std::string type, int amount) {
       }
     } else if (type == "Mineros") {
       for (int i = 0; i < amount; i++) {
-        this->workers[j] = new Miner(this->carbon_and_iron_warehouse, j,
+        this->workers[j] = new Miner(this->coal_and_iron_warehouse, j,
                                      this->inventory);
         this->inventory.initialize(IRON);
+        this->inventory.initialize(COAL);
         j++;
       }
     } else if (type == "Cocineros") {
@@ -115,20 +116,19 @@ void Town::load_queue(char resource) {
     case WOOD:
       wood_warehouse.push(resource);
       break;
-    case CARBONO:
-      carbon_and_iron_warehouse.push(resource);
+    case COAL:
+      coal_and_iron_warehouse.push(resource);
       break;
     case IRON:
-      carbon_and_iron_warehouse.push(resource);
+      coal_and_iron_warehouse.push(resource);
       break;
   }
-  return;
 }
 
 void Town::close_queues() {
     this->food_warehouse.close();
     this->wood_warehouse.close();
-    this->carbon_and_iron_warehouse.close();
+    this->coal_and_iron_warehouse.close();
 }
 
 int Town::process_resources() {

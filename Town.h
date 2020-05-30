@@ -19,7 +19,7 @@ private:
 	std::vector<Worker*> workers;
 	BlockingQueue food_warehouse;
 	BlockingQueue wood_warehouse;
-	BlockingQueue carbon_and_iron_warehouse;
+	BlockingQueue coal_and_iron_warehouse;
 	Inventory inventory;
 	ProfitPointsCounter points;
 

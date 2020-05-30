@@ -1,12 +1,12 @@
 #ifndef FARMER_H
 #define FARMER_H
-#include "Collector.h"
+#include "Gatherer.h"
 
-class Farmer : public Collector {
+class Farmer : public Gatherer {
 public:
 	Farmer(BlockingQueue& queue, const int id, Inventory& inv);
 
-	//Llama al run de Collector y luego indica que finalizó su trabajo
+	//Llama al run de Gatherer y luego indica que finalizó su trabajo
 	//al inventario.
 	virtual void run();
 	

@@ -9,12 +9,10 @@ ProfitPointsCounter::ProfitPointsCounter(){
 void ProfitPointsCounter::add_points(const int points) {
 	std::unique_lock<std::mutex> lock(m);
 	this->counter += points;
-	return;
 }
 
 void ProfitPointsCounter::print_counter() const {	
 	std::cout << "Puntos de Beneficio acumulados: "<< this->counter <<"\n";
-	return;
 }
 
 ProfitPointsCounter::ProfitPointsCounter(ProfitPointsCounter &&other) {

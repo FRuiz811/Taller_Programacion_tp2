@@ -1,12 +1,12 @@
 #ifndef MINER_H
 #define MINER_H
-#include "Collector.h"
+#include "Gatherer.h"
 
-class Miner : public Collector {
+class Miner : public Gatherer {
 public:
 	Miner(BlockingQueue& queue, const int id, Inventory& inv);
 
-	//Llama al run de Collector y luego indica que finalizó su trabajo
+	//Llama al run de Gatherer y luego indica que finalizó su trabajo
 	//al inventario.
 	virtual void run();
 	
