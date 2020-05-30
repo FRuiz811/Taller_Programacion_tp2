@@ -17,10 +17,7 @@ private:
 	std::mutex m;
     std::condition_variable cv;
     bool notified = false;
-    bool not_initialize = true;
-    bool farmers_finish = true;
-    bool woodcutter_finish = true;
-    bool miner_finish = true;
+    int gatherer_working;
 
 public:
 	//Constructores para la clase Inventory, se permite el constructor
@@ -48,17 +45,13 @@ public:
 	
 	//Se utiliza para indicar que podrían llegar a ingresar recursos del tipo
 	//indicado como parámetro.
-	void initialize(const char resource);
-
-	bool is_initialize() const;
+	void gatherer_starts();
 	
+	void gatherer_ends();
+
 	bool is_open() const;
 
 	bool is_empty() const;
-	
-	//Indica que el recolector del recurso indicado como parámetro finalizó con
-	//su trabajo.
-	void collector_finish(const char type);
 
     ~Inventory();
 

@@ -7,7 +7,7 @@
 #define IRON 'H'
 #define COAL 'C'
 
-Inventory::Inventory(){
+Inventory::Inventory() : gatherer_working(0) {
 	std::unique_lock<std::mutex> lock(m);
 	resources[WHEAT] = 0;
 	resources[WOOD] = 0;
@@ -44,7 +44,7 @@ void Inventory::print_resources() const {
 int Inventory::remove_resource(const std::unordered_map<char,int>& request) {
 	std::unique_lock<std::mutex> lock(m);
 	while (!this->notified){
-		if (!is_initialize() || !is_open())
+		if (!is_open())
 			return 1;
 		cv.wait(lock);
 	}
@@ -58,34 +58,16 @@ int Inventory::remove_resource(const std::unordered_map<char,int>& request) {
 	return 0;
 }
 
-void Inventory::initialize(const char resource) {
-	this->not_initialize = false;
-	if (resource == WHEAT) {
-		this->farmers_finish = false;
-	} else if (resource == WOOD) {
-		this->woodcutter_finish = false;
-	} else if (resource == COAL || resource == IRON) {
-		this->miner_finish = false;
-	}
-}
-
-bool Inventory::is_initialize() const {
-	return !this->not_initialize;
+void Inventory::gatherer_starts() {
+	this->gatherer_working++;
 }
 
 bool Inventory::is_open() const {
-	return (!this->farmers_finish || !this->woodcutter_finish || 
-					!this->miner_finish);
+	return (this->gatherer_working != 0);
 }
 
-void Inventory::collector_finish(const char type) {
-	if (type == WHEAT) {
-		this->farmers_finish = true;
-	} else if (type == WOOD) {
-		this->woodcutter_finish = true;
-	} else if (type == COAL || type == IRON) {
-		this->miner_finish = true;
-	}
+void Inventory::gatherer_ends() {
+	this->gatherer_working--;
 	cv.notify_all();
 }
 

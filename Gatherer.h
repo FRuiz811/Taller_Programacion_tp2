@@ -12,7 +12,7 @@ private:
 
 public:
 	Gatherer(BlockingQueue& queue, const int id, Inventory& inv);
-
+	
 	//Mientras la queue de la cual saca recursos esté abierta o con items,
 	//irá sacando de a uno para trabajarlos y luego los agregará en el 
 	//inventario.

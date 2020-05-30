@@ -10,15 +10,26 @@
 class Producer : public Worker {
 private:
 	ProfitPointsCounter& counter;
+	int points_producer;
+	std::unordered_map<char,int> requirements;
+
+	void create_cook();
+
+	void create_carpenter();
+
+	void create_gunsmith();
 
 public:
+
 	Producer(ProfitPointsCounter& counter, const int id, Inventory& inv);
 
 	//Mientras el inventario del Town esté abierto  y cuente con  los items,
 	//que necesite para trabajar, los irá sacando para procesarlos y agregar
 	//esos puntos al contador.
-	virtual void run(const int points, 
-					 const std::unordered_map<char,int> &request);
+	virtual void run();
+
+	static Producer* factory(std::string type, ProfitPointsCounter& counter,
+							 int id, Inventory& inv);
 
 	virtual ~Producer();
 

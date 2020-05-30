@@ -4,12 +4,8 @@
 #include <utility>
 #include <vector>
 #include <string> 
-#include "Farmer.h"
-#include "WoodCutter.h"
-#include "Miner.h"
-#include "Cook.h"
-#include "Carpenter.h"
-#include "Gunsmith.h"
+#include "Gatherer.h"
+#include "Producer.h"
 
 #define WHEAT 'T'
 #define WOOD 'M'
@@ -31,43 +27,28 @@ int Town::create_workers(std::string type, int amount) {
   static int j = 0;
   if (type == "Agricultores") {
       for (int i = 0; i < amount; i++) {
-        this->workers[j] = new Farmer(this->food_warehouse, j, 
+        this->workers[j] = new Gatherer(this->food_warehouse, j, 
                                       this->inventory);
-        this->inventory.initialize(WHEAT);
         j++;
       }
     } else if (type == "Leniadores") {
       for (int i = 0; i < amount; i++) {
-       this->workers[j] = new WoodCutter(this->wood_warehouse, j, 
+       this->workers[j] = new Gatherer(this->wood_warehouse, j, 
                                          this->inventory);
-       this->inventory.initialize(WOOD);
        j++;
       }
     } else if (type == "Mineros") {
       for (int i = 0; i < amount; i++) {
-        this->workers[j] = new Miner(this->coal_and_iron_warehouse, j,
+        this->workers[j] = new Gatherer(this->coal_and_iron_warehouse, j,
                                      this->inventory);
-        this->inventory.initialize(IRON);
-        this->inventory.initialize(COAL);
-        j++;
-      }
-    } else if (type == "Cocineros") {
-      for (int i = 0; i < amount; i++) {
-        this->workers[j] = new Cook(this->points, j, this->inventory);
-        j++;      
-      }
-    } else if (type == "Carpinteros") {
-      for (int i = 0; i < amount; i++) {
-        this->workers[j] = new Carpenter(this->points, j, this->inventory);
-        j++;
-      }
-    } else if (type == "Armeros") {
-      for (int i = 0; i < amount; i++) {
-        this->workers[j] = new Gunsmith(this->points, j, this->inventory);
         j++;
       }
     } else {
-      return -1;
+      for (int i = 0; i < amount; i++) {
+        this->workers[j] = Producer::factory(type, this->points,
+                                                 j, this->inventory);
+        j++;      
+      }
     }
     return 0;
 }

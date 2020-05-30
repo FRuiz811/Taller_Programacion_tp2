@@ -5,7 +5,9 @@
 #define GATHERER_WORK_TIME 50000
 
 Gatherer::Gatherer(BlockingQueue& queue,const int id, Inventory& inv) :
- Worker(GATHERER_WORK_TIME, id, inv),queue(queue) {}
+ Worker(GATHERER_WORK_TIME, id, inv),queue(queue) {
+ 	this->inventory.gatherer_starts();
+ }
 
 void Gatherer::run() {
 	char resource = '\0';
@@ -16,6 +18,7 @@ void Gatherer::run() {
 		usleep(this->work_time);
 		this->inventory.add_resource(resource);
 	}
+	this->inventory.gatherer_ends();
 }
 
 Gatherer::~Gatherer() {}
