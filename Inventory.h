@@ -43,8 +43,11 @@ public:
 
 	void print_resources() const;
 	
+	//Agrega un recolector que va a estar trabajando en el inventario.
 	void gatherer_starts();
 	
+	//Un recolecotor finaliza su trabajo y le indica al inventario que ya no 
+	//va a realizar más trabajo sobre él.
 	void gatherer_ends();
 
 	bool is_open() const;
