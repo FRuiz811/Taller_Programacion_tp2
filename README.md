@@ -99,3 +99,14 @@ cierren los recolectores una vez que finalicen con todo su trabajo.
 
 De esta manera el inventario mantiene el control de quienes son los que 
 acceden a los recursos y que estos los hagan de manera ordenada.
+
+## Correcciones para Segunda Entrega
+
+Para la segunda entrega se pidieron corregir las siguientes cosas:
+
++ Ahorrar la jerarquía de los productores agregndo una factory en la clase 
+Producer: para realizar esto, se realizó un método de clase al cual se le 
+indica que tipo de productor se quiere crear y este devolverá un puntero a él 
+nuevo productor que estará allocado en memoria.
+
++ 

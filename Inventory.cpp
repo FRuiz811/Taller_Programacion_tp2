@@ -59,6 +59,7 @@ int Inventory::remove_resource(const std::unordered_map<char,int>& request) {
 }
 
 void Inventory::gatherer_starts() {
+	std::unique_lock<std::mutex> lock(m);
 	this->gatherer_working++;
 }
 
@@ -67,6 +68,7 @@ bool Inventory::is_open() const {
 }
 
 void Inventory::gatherer_ends() {
+	std::unique_lock<std::mutex> lock(m);
 	this->gatherer_working--;
 	cv.notify_all();
 }

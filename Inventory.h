@@ -43,8 +43,6 @@ public:
 
 	void print_resources() const;
 	
-	//Se utiliza para indicar que podrían llegar a ingresar recursos del tipo
-	//indicado como parámetro.
 	void gatherer_starts();
 	
 	void gatherer_ends();
