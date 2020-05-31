@@ -66,14 +66,14 @@ mismo.
 
 ### Especificación de los Workers
 
-Si bien los Workers podrían ser simplemente Collector o Producer sin más 
+Si bien los Workers podrían ser simplemente Gatherer o Producer sin más 
 especificación, decidí implementar cada una de las clases para cada
 trabajador. Me pareció que en algún momento cada Worker, podría tener 
 funcionalidades distintas a las otras o que podrían avanzar su nivel de manera 
 independiente del resto. 
 
 En el caso de los Producer, me pareció más prolijo para especificar los puntos 
-que generan y los recursos que necesitan para ello. En caso de los Collector, 
+que generan y los recursos que necesitan para ello. En caso de los Gatherer, 
 es donde menos sentido le veo a la especificación, pero al realizarlo en los
 productores me pareció correcto también aplicarla en los recolectores.
 
@@ -107,6 +107,18 @@ Para la segunda entrega se pidieron corregir las siguientes cosas:
 + Ahorrar la jerarquía de los productores agregndo una factory en la clase 
 Producer: para realizar esto, se realizó un método de clase al cual se le 
 indica que tipo de productor se quiere crear y este devolverá un puntero a él 
-nuevo productor que estará allocado en memoria.
+nuevo productor que estará allocado en memoria. Esto trajo asociado un cambio 
+de que en los Gatherer también dejó de tener la jerarquía ya que lo único que 
+las diferencian es la asignación con la queue con la cuál trabajan.
 
-+ 
++ Problema al cerrar el inventario: Lo que se hizo para corregir esto, es que 
+el inventario llevará un contador con todos los recolectores que trabajarán 
+sobre él. Luego a medida que estos terminen de hacer su trabajo, 
+indistintamente de su tipo de recolector, van a indicar que finalizaron su 
+trabajo. De esta manera el inventario se cerrará cuando ya no haya ningún 
+recolector trabajando.
+
++ Luego se corrigieron los demás fix pequeños, de cambio de notación del 
+Carbón, de eliminar los return en métodos que devuelven void. El cambio de 
+milisegundos a microsegundos. Y algunos que dejaron de tener sentido por las 
+modificaciones estrucutrales del diseño.
