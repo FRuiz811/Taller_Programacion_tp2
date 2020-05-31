@@ -3,6 +3,7 @@
 #include "Worker.h"
 #include "ProfitPointsCounter.h"
 #include <unordered_map>
+#include <string>
 
 //La clase Producer tiene asignado un contador de puntos de beneficios
 //en el cual va a ir sumando los puntos que genera luego de procesar los 
@@ -20,7 +21,6 @@ private:
 	void create_gunsmith();
 
 public:
-
 	Producer(ProfitPointsCounter& counter, const int id, Inventory& inv);
 
 	//Mientras el inventario del Town esté abierto  y cuente con  los items,

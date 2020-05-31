@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <unordered_map>
+#include <string>
 
 #define PRODUCER_WORK_TIME 60000
 #define WHEAT 'T'
